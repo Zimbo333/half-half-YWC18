@@ -33,7 +33,7 @@
 			<div class="py-4"></div>
 			<div class="grid grid-cols-4 gap-4">
 				<div class="col-span-1">
-					<aside class="p-4 border-solid border-blue-900 border rounded">
+					<aside class="p-4 border-solid border-gray-300 border rounded-sm">
 						<form>
 							<h3 class="font-black text-lg">ประเภทร้านค้า</h3>
 							<div class="py-4">
@@ -65,7 +65,7 @@
 								<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm ">
 									<select name="priceRange" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.price" :data-value="search.price">
 										<option value="placeholder" disabled selected>กรุณาเลือก</option>
-										<option v-for="(i,index) in api.priceRange" :key="index" :value="i">{{i}}</option>
+										<option v-for="(i,index) in api.priceRange" :key="index" :value="index+1">{{i}}</option>
 									</select>
 								</div>
 							</div>
@@ -90,12 +90,28 @@
 					</aside>
 				</div>
 				<div class="col-span-3">
-					<article v-for="(shop,index) in shops" class="border border-solid border-blue-300 mb-4 p-2">
-						<div class="grid grid-cols-4 gap-4">
+					<article v-for="(shop,index) in shops" class="border border-solid border-blue-300 mb-4 p-1 rounded-sm">
+						<div class="grid grid-cols-4 gap-5">
 							<div class="col-span-1">
-								<div class="cover" :style="{'--img':`url(${shop.coverImageId})`}"></div>
+								<div class="cover rounded-sm" :style="{'--img':`url(${shop.coverImageId})`}"></div>
 							</div>
-							<div class="col-span-3"></div>
+							<div class="col-span-3 py-5">
+								<h3 class="font-semibold text-xl mb-1">
+									{{shop.shopNameTH}}
+									<div v-if="shop.isOpen != 'N/A'"  class="inline-block isOpen text-xs ml-3 rounded-sm px-2 text-white" :data-value="shop.isOpen"></div>
+								</h3>
+								<h4 class="text-gray-500 text-sm">
+									{{shop.subcategoryName}}
+									<span class="px-2">|</span>
+									<span v-for="i in shop.priceLevel" class="text-black">฿</span><span v-for="i in (4-shop.priceLevel)">฿</span>
+									<span class="px-2">|</span>
+									{{shop.addressDistrictName}} {{shop.addressProvinceName}}
+								</h4>
+								<div class="line"></div>
+								<p>{{shop.highlightText}}</p>
+								<span></span>
+
+							</div>
 						</div>
 
 						{{shop}}
