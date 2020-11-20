@@ -1,0 +1,16 @@
+:root{
+	--ci-blue:#283a7c;
+	--ci-green:#5fc50d;
+}
+.bg-ci-blue{
+	background-color: var(--ci-blue)
+}
+.text-ci-blue{
+	color: var(--ci-blue)
+}
+.bg-ci-green{
+	background-color: var(--ci-green)
+}
+.text-ci-green{
+	color: var(--ci-green)
+}
