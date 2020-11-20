@@ -1,7 +1,13 @@
 :root{
 	--ci-blue:#283a7c;
 	--ci-green:#5fc50d;
-	--ci-border-1:#e2e8f0;
+	--ci-fac:#6cbf5f;
+	--ci-shop:#c9e1e9;
+	--ci-aside:#a0aec0;
+	--bg-1:#fff;
+	--bg-2:#6cc1ec;
+	--bg-3:#82caef;
+	--bg-4:#82caef;
 }
 @font-face {
 	font-family: "IBM";
@@ -32,6 +38,13 @@ Document Style
 body{
 	font-family: 'IBM',-apple-system, BlinkMacSystemFont, sans-serif !important;
 }
+#main_wrap{
+	background-attachment: fixed;
+	background-image:linear-gradient(to bottom right,var(--bg-1),var(--bg-2) 70%,var(--bg-3) 70%,var(--bg-4));
+}
+#main{
+	background-image:linear-gradient(to bottom,#fff,#fff 400px,transparent 400px),linear-gradient(to bottom,#fff,#fff 200px,transparent);
+}
 .bg-ci-blue{
 	background-color: var(--ci-blue)
 }
@@ -45,21 +58,25 @@ body{
 	color: var(--ci-green)
 }
 
-select[data-value="placeholder"]{
+select[data-value="all"]{
 	color: #aaa
 }
 
-#map-icon{
+.map-icon{
 	position: absolute;
 	left: 12px;
 	top: 12px;
 	display: none;
 }
-div[data-value="nearby"] #map-icon{
+div[data-value="nearby"] #map-icon-near{
 	display: block;
 }
-div[data-value="nearby"] select{
-	padding-left: 16px;
+div[data-value="all"] #map-icon-all{
+	display: block;
+}
+div[data-value="nearby"] select,
+div[data-value="all"] select{
+	padding-left: 20px;
 }
 
 .cover{
@@ -72,18 +89,24 @@ div[data-value="nearby"] select{
 	background-color: #eee;
 	overflow: hidden;
 }
+/*-- Mobile Version --*/
+@media (max-width: 768px) {
+	.cover{
+		padding-top: 56.6%;
+	}
+}
 
 .line {
-    width: 65%;
-    height: 1px;
-    background-color: rgb(238, 238, 238);
-    margin: 18px 0px;
+	width: 65%;
+	height: 1px;
+	background-color: rgb(238, 238, 238);
+	margin: 18px 0px;
 }
 
 .isOpen {
-    background-color: #a1a1a1;
-    line-height: 1.7;
-    padding-top: 2px;
+	background-color: #a1a1a1;
+	line-height: 1.7;
+	padding-top: 2px;
 }
 .isOpen::before{
 	content: "ปิดแล้ว"
@@ -93,4 +116,36 @@ div[data-value="nearby"] select{
 }
 .isOpen[data-value="Y"]::before{
 	content: "เปิดอยู่"
+}
+.fac-icon{
+	margin-right: 6px;
+	margin-bottom: 3px;
+	padding: 5px;
+	border-radius: 20px;
+	border: 1px solid var(--ci-fac);
+	display: inline-block;
+}
+.fac-icon img {
+    height: 1.1rem;
+    width: 1.1rem;
+}
+.shop{
+	border-color: var(--ci-shop)
+}
+.aside{
+	border-color: var(--ci-aside)
+}
+
+
+#filterMobile {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    transition: all .3s;
+}
+#filterMobile[data-toggle="true"]{
+	right: 0%;
 }

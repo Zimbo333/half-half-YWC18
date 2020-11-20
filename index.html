@@ -9,119 +9,227 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<link rel="apple-touch-icon" sizes="120x120" href="favicon.png"/><link rel="icon" type="image/png" sizes="32x32" href="favicon.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon.png"/>
 </head>
 <body>
 
 	<div id="app">
 		<header>
-			<div class="container mx-auto py-3">
-				<div class="grid grid-cols-6 gap-4 items-center">
-					<div class="col-span-1">
-						<img src="img/logo.png" class=""> 
+			<div class="container mx-auto p-3">
+				<div class="grid grid-cols-12 md:gap-6 items-center gap-4">
+					<div class="md:col-span-2 col-span-2">
+						<picture  class="w-full">
+							<source media="(min-width: 768px)" srcset="img/logo.png" alt="คนละครึ่ง"/>
+							<img src="img/logo-mini.png" alt="คนละครึ่ง"  class="w-full">
+						</picture>
 					</div>
-					<div class="col-span-5">form search</div>
-				</div>
-			</div>
-		</header>
-		<section class="bg-ci-blue text-white">
-			<div class="container mx-auto py-3">
-				<a href="#!" class="font-light underline">หน้าแรก</a><span class="px-4">/</span><b>ค้นหา</b>
-			</div>
-		</section>
-		<section class="mx-auto p-5">
-			<h2 class="font-black text-xl">ผลการค้นหา ร้านอาหารและเครื่องดื่ม ทั้งหมด</h2>
-			<div class="py-4"></div>
-			<div class="grid grid-cols-4 gap-4">
-				<div class="col-span-1">
-					<aside class="p-4 border-solid border-gray-300 border rounded-sm">
-						<form>
-							<h3 class="font-black text-lg">ประเภทร้านค้า</h3>
-							<div class="py-4">
-								<div class="py-1">
-									<label class="cursor-pointer">
-										<input type="radio" name="category" value="all" checked v-model="search.cat">
-										<span class="px-2">ทั้งหมด</span>
-									</label>
-								</div>
-								<div v-for="(i,index) in api.categories" :key="index" class="py-1">
-									<label class="cursor-pointer">
-										<input type="radio" name="category" :value="index" v-model="search.cat">
-										<span class="px-2">{{i.name}}</span>
-									</label>
-								</div>
-							</div>
-							<div class="">
-								<label class="font-black text-lg mb-2 block">จังหวัด/ใกล้ฉัน</label>
-								<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm relative"  :data-value="search.province">
-									<i class="fas fa-map-marker-alt" id="map-icon"></i>
-									<select name="province" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.province">
+					<div class="md:col-span-10 col-span-9 text-xs md:text-base">
+						<div class="border-2 rounded-lg border-solid block w-full grid grid-cols-12  items-center shadow-sm ">
+							<div class="md:col-span-2 border-r-2 border-solid hidden md:block">
+								<div class="block w-full py-2 px-3 relative"  :data-value="qprovince">
+									<i class="fas fa-map-marker-alt map-icon" id="map-icon-near"></i>
+									<i class="fas fa-map-marked-alt map-icon" id="map-icon-all"></i>
+									<select name="province" class="cursor-pointer  block w-full focus:outline-none" required v-model="qprovince">
 										<option value="nearby">พื้นที่ใกล้ฉัน</option>
+										<option value="all">สถานที่ทั้งหมด</option>
 										<option v-for="(i,index) in api.provinces" :key="index" :value="i">{{i}}</option>
 									</select>
 								</div>
 							</div>
-							<div class="py-5">
-								<label class="font-black text-lg mb-2 block">ราคา</label>
-								<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm ">
-									<select name="priceRange" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.price" :data-value="search.price">
-										<option value="placeholder" disabled selected>กรุณาเลือก</option>
-										<option v-for="(i,index) in api.priceRange" :key="index" :value="index+1">{{i}}</option>
-									</select>
-								</div>
+							<div class="md:col-span-9 col-span-10">
+								<input type="text" name="q" class="block w-full  py-2 px-4 focus:outline-none" placeholder="ค้นหา ชื่อ ร้านอาหาร และเครื่องดื่ม ร้านธงฟ้า ร้านค้า OTOP และสินค้าทั่วไป">
 							</div>
-							<div class="" v-if="search.cat != 'all'">
-								<label class="font-black text-lg mb-2 block py-3">ประเภท{{api.categories[search.cat].name}}</label>
-								<div class="text-sm">
-									<div class="">
+							<div class="md:col-span-1 col-span-2 bg-gray-100 h-full flex items-center justify-center cursor-pointer">
+								<i class="fas fa-search text-gray-500"></i>
+							</div>
+						</div>
+					</div>
+					<div class="col-span-1 md:hidden flex items-center justify-center cursor-pointer">
+						<img src="img/filter.png" alt="" @click="toggle = true">
+					</div>
+				</div>
+			</div>
+		</header>
+		<section class="bg-ci-blue text-white">
+			<div class="container mx-auto p-3">
+				<a href="#!" class="font-light underline">หน้าแรก</a><span class="px-4">/</span><b>ค้นหา</b>
+			</div>
+		</section>
+		<section id="main_wrap">
+			<div id="main"  class="mx-auto p-5">
+				<h2 class="font-black text-xl">ผลการค้นหา {{title}} ทั้งหมด</h2>
+				<div class="py-4"></div>
+				<div class="grid grid-cols-12 gap-4" >
+					<div class="lg:col-span-3 md:col-span-4 col-span-12 hidden md:block">
+						<aside class="p-4 border-solid border-gray-300 border rounded-sm aside bg-white">
+							<form>
+								<h3 class="font-black text-lg">ประเภทร้านค้า</h3>
+								<div class="py-4">
+									<div class="py-1">
 										<label class="cursor-pointer">
-											<input type="radio" name="subcategory" value="all" checked v-model="search.subcat" checked>
+											<input type="radio" name="category" value="all" checked v-model="search.cat">
 											<span class="px-2">ทั้งหมด</span>
 										</label>
 									</div>
-									<div v-for="(i,index) in api.categories[search.cat].subcategories" :key="index" class="py-1">
+									<div v-for="(i,index) in api.categories" :key="index" class="py-1" v-if="api != null">
 										<label class="cursor-pointer">
-											<input type="radio" name="subcategory" :value="i" v-model="search.subcat">
-											<span class="px-2">{{i}}</span>
+											<input type="radio" name="category" :value="index" v-model="search.cat">
+											<span class="px-2">{{i.name}}</span>
 										</label>
 									</div>
 								</div>
-							</div>
-						</form>
-					</aside>
-				</div>
-				<div class="col-span-3">
-					<article v-for="(shop,index) in shops" class="border border-solid border-blue-300 mb-4 p-1 rounded-sm">
-						<div class="grid grid-cols-4 gap-5">
-							<div class="col-span-1">
-								<div class="cover rounded-sm" :style="{'--img':`url(${shop.coverImageId})`}"></div>
-							</div>
-							<div class="col-span-3 py-5">
-								<h3 class="font-semibold text-xl mb-1">
-									{{shop.shopNameTH}}
-									<div v-if="shop.isOpen != 'N/A'"  class="inline-block isOpen text-xs ml-3 rounded-sm px-2 text-white" :data-value="shop.isOpen"></div>
-								</h3>
-								<h4 class="text-gray-500 text-sm">
-									{{shop.subcategoryName}}
-									<span class="px-2">|</span>
-									<span v-for="i in shop.priceLevel" class="text-black">฿</span><span v-for="i in (4-shop.priceLevel)">฿</span>
-									<span class="px-2">|</span>
-									{{shop.addressDistrictName}} {{shop.addressProvinceName}}
-								</h4>
-								<div class="line"></div>
-								<p>{{shop.highlightText}}</p>
-								<span></span>
+								<div class="">
+									<label class="font-black text-lg mb-2 block">จังหวัด/ใกล้ฉัน</label>
+									<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm relative"  :data-value="search.province">
+										<i class="fas fa-map-marker-alt map-icon" id="map-icon-near"></i>
+										<i class="fas fa-map-marked-alt map-icon" id="map-icon-all"></i>
+										<select name="province" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.province">
+											<option value="nearby">พื้นที่ใกล้ฉัน</option>
+											<option value="all">สถานที่ทั้งหมด</option>
+											<option v-for="(i,index) in api.provinces" :key="index" :value="i">{{i}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="py-5">
+									<label class="font-black text-lg mb-2 block">ราคา</label>
+									<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm ">
+										<select name="priceRange" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.price" :data-value="search.price">
+											<option value="all" selected>กรุณาเลือก</option>
+											<option v-for="(i,index) in api.priceRange" :key="index" :value="index+1">{{i}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="" v-if="search.cat != 'all'">
+									<label class="font-black text-lg mb-2 block py-3">ประเภท{{api.categories[search.cat].name}}</label>
+									<div class="text-sm">
+										<div class="">
+											<label class="cursor-pointer">
+												<input type="radio" name="subcategory" value="all" checked v-model="search.subcat" checked>
+												<span class="px-2">ทั้งหมด</span>
+											</label>
+										</div>
+										<div v-for="(i,index) in api.categories[search.cat].subcategories" :key="index" class="py-1">
+											<label class="cursor-pointer">
+												<input type="radio" name="subcategory" :value="i" v-model="search.subcat">
+												<span class="px-2">{{i}}</span>
+											</label>
+										</div>
+									</div>
+								</div>
+							</form>
+						</aside>
+					</div>
+					<div class="lg:col-span-9 md:col-span-8 col-span-12">
+						<article v-for="(shop,index) in viewShop" class="shop border border-solid mb-4 p-1 rounded-sm bg-white">
+							<div class="grid grid-cols-12">
+								<div class="lg:col-span-3 md:col-span-5 col-span-12">
+									<div class="cover rounded-sm" :style="{'--img':`url(${shop.coverImageId})`}"></div>
+								</div>
+								<div class="lg:col-span-9 md:col-span-7 col-span-12 md:p-5 p-3">
+									<h3 class="font-semibold text-xl mb-1">
+										{{shop.shopNameTH}}
+										<div v-if="shop.isOpen != 'N/A'"  class="inline-block isOpen text-xs ml-3 rounded-sm px-2 text-white" :data-value="shop.isOpen"></div>
+									</h3>
+									<h4 class="text-gray-500 md:text-sm text-xs">
+										{{shop.subcategoryName}}
+										<span class="px-2">|</span>
+										<span v-for="i in shop.priceLevel" class="text-black">฿</span><span v-for="i in (4-shop.priceLevel)">฿</span>
+										<span class="px-2">|</span>
+										{{shop.addressDistrictName}} {{shop.addressProvinceName}}
+									</h4>
+									<div class="line"></div>
+									<p class="text-gray-500 md:text-sm text-xs mb-2" v-html="shop.highlightText" v-if="shop.highlightText.length > 0"></p>
+									<p class="text-gray-500 md:text-sm text-xs mb-2" v-if="shop.recommendedItems.length > 0">
+										<span class="font-semibold text-gray-800">เมนูแนะนำ:</span>
+										<span class="ml-1">{{shop.recommendedItems.join(', ')}}</span>
+									</p>
+									<div v-if="shop.facilities.length > 0" class="pt-2">
+										<div class="fac-icon" v-for="f in shop.facilities">
+											<img :src="`img/${f}.png`" alt="">
+										</div>
+									</div>
+									<span></span>
 
+								</div>
+							</div>
+						</article>
+						<div class="py-10">
+							<div class="text-center" v-if="shops.length > 0 && shops.length > showItem">
+								<div class="cursor-pointer  bg-white border-solid border rounded inline-block px-40 py-4" @click="viewMore()">ดูเพิ่มเติม</div>
 							</div>
 						</div>
-
-						{{shop}}
-					</article>
+					</div>
 				</div>
 			</div>
 		</section>
-		{{api}}
-		<div class="bg-gray-700 text-white p-10">
-			{{shop}}
+
+		<div class=" md:hidden bg-white"  id="filterMobile" :data-toggle="toggle">
+			<div class="p-4 bg-ci-blue text-white">
+				<div class="grid grid-cols-12 items-center">
+					<div class="col-span-1">
+						<i class="fas fa-chevron-left cursor-pointer w-full" @click="toggle = false"></i>
+					</div>
+					<div class="col-span-10">
+				<h4 class="text-center text-2xl">กรอกผล</h4></div>
+				</div>
+			</div>
+			<aside class="p-4 ">
+				<form>
+					<h3 class="font-black text-lg font-black">ประเภทร้านค้า</h3>
+					<div class="py-4">
+						<div class="py-1">
+							<label class="cursor-pointer">
+								<input type="radio" name="category" value="all" checked v-model="search.cat">
+								<span class="px-2">ทั้งหมด</span>
+							</label>
+						</div>
+						<div v-for="(i,index) in api.categories" :key="index" class="py-1" v-if="api != null">
+							<label class="cursor-pointer">
+								<input type="radio" name="category" :value="index" v-model="search.cat">
+								<span class="px-2">{{i.name}}</span>
+							</label>
+						</div>
+					</div>
+					<div class="">
+						<label class="font-black text-lg mb-2 block">จังหวัด/ใกล้ฉัน</label>
+						<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm relative"  :data-value="search.province">
+							<i class="fas fa-map-marker-alt map-icon" id="map-icon-near"></i>
+							<i class="fas fa-map-marked-alt map-icon" id="map-icon-all"></i>
+							<select name="province" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.province">
+								<option value="nearby">พื้นที่ใกล้ฉัน</option>
+								<option value="all">สถานที่ทั้งหมด</option>
+								<option v-for="(i,index) in api.provinces" :key="index" :value="i">{{i}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="py-5">
+						<label class="font-black text-lg mb-2 block">ราคา</label>
+						<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm ">
+							<select name="priceRange" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.price" :data-value="search.price">
+								<option value="all" selected>กรุณาเลือก</option>
+								<option v-for="(i,index) in api.priceRange" :key="index" :value="index+1">{{i}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="" v-if="search.cat != 'all'">
+						<label class="font-black text-lg mb-2 block py-3">ประเภท{{api.categories[search.cat].name}}</label>
+						<div class="text-sm">
+							<div class="">
+								<label class="cursor-pointer">
+									<input type="radio" name="subcategory" value="all" checked v-model="search.subcat" checked>
+									<span class="px-2">ทั้งหมด</span>
+								</label>
+							</div>
+							<div v-for="(i,index) in api.categories[search.cat].subcategories" :key="index" class="py-1">
+								<label class="cursor-pointer">
+									<input type="radio" name="subcategory" :value="i" v-model="search.subcat">
+									<span class="px-2">{{i}}</span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</form>
+			</aside>
 		</div>
 	</div>
 	<script>
@@ -129,28 +237,81 @@
 			el:'#app',
 			data:{
 				loading:true,
-				api:null,
+				toggle:false,
+				api:{
+					categories:{},
+					provinces:[],
+					priceRange:[],
+				},
 				search:{
 					cat:"all",
 					province:"nearby",
-					price:"placeholder",
+					price:"all",
 					subcat:"all",
 				},
+				qprovince:"nearby",
+				shops:[],
+				viewShop:[],
+				showItem:3
 			},
 			computed:{
-				shops: function(){
-					let merchants = this.api.merchants
-					let shops = {}
-					if (this.search.cat == 'all') {
-						shops = merchants
-					}else{
-
+				title: function(){
+					let txt = 'ร้านค้า'
+					if (this.search.cat != 'all') {
+						txt = this.api.categories[this.search.cat].name
 					}
-					return shops
+					return txt
 				}
 			},
 			watch:{
+				'search.cat': function(){
+					this.search.subcat = 'all'
+					this.getShops()
+					this.showItem = 3
+				},
+				'search.province': function(){
+					this.getShops()
+					this.showItem = 3
+				},
+				'search.price': function(){
+					this.getShops()
+					this.showItem = 3
+				},
+			},
+			methods:{
+				viewMore: function (){
+					this.showItem += 3
+					this.viewShop = this.shops.slice(0,this.showItem)
+				},
+				getShops: function(){
+					let m = this.api.merchants
+					let shops = {}
+					let cat =  this.search.cat
+					let price =  this.search.price
+					let province =  this.search.province
+					if (province == 'nearby') {
+						province = 'all'
+					}
+					shops = []
+					for(let i in m){
+						let pick = true
+						if (price != 'all' && price != m[i].priceLevel) {
+							pick = false
+						}
+						if (province != 'all' && province != m[i].addressProvinceName) {
+							pick = false
+						}
+						if (cat != 'all' && cat != m[i].categoryName) {
+							pick = false
+						}
 
+						if (pick) {
+							shops.push(m[i])
+						}
+					}
+					this.shops = shops
+					this.viewShop = shops.slice(0,this.showItem)
+				}
 			}
 		})
 		let static_data = {};
@@ -162,6 +323,7 @@
 				app.api = json
 				static_data = json
 				console.log(app.api)
+				app.getShops()
 			})
 		}, false);
 	</script>
