@@ -28,7 +28,7 @@
 				<a href="#!" class="font-light underline">หน้าแรก</a><span class="px-4">/</span><b>ค้นหา</b>
 			</div>
 		</section>
-		<section class="mx-auto p-4">
+		<section class="mx-auto p-5">
 			<h2 class="font-black text-xl">ผลการค้นหา ร้านอาหารและเครื่องดื่ม ทั้งหมด</h2>
 			<div class="py-4"></div>
 			<div class="grid grid-cols-4 gap-4">
@@ -71,19 +71,18 @@
 							</div>
 							<div class="" v-if="search.cat != 'all'">
 								<label class="font-black text-lg mb-2 block py-3">ประเภท{{api.categories[search.cat].name}}</label>
-									<div class="text-sm">
-										<div class="">
-											<label class="cursor-pointer">
-												<input type="radio" name="subcategory" value="all" checked v-model="search.subcat">
-												<span class="px-2">ทั้งหมด</span>
-											</label>
-										</div>
-										<div v-for="(i,index) in api.categories[search.cat].subcategories" :key="index" class="py-1">
-											<label class="cursor-pointer">
-												<input type="radio" name="subcategory" :value="i" v-model="search.subcat">
-												<span class="px-2">{{i}}</span>
-											</label>
-										</div>
+								<div class="text-sm">
+									<div class="">
+										<label class="cursor-pointer">
+											<input type="radio" name="subcategory" value="all" checked v-model="search.subcat" checked>
+											<span class="px-2">ทั้งหมด</span>
+										</label>
+									</div>
+									<div v-for="(i,index) in api.categories[search.cat].subcategories" :key="index" class="py-1">
+										<label class="cursor-pointer">
+											<input type="radio" name="subcategory" :value="i" v-model="search.subcat">
+											<span class="px-2">{{i}}</span>
+										</label>
 									</div>
 								</div>
 							</div>
@@ -91,12 +90,23 @@
 					</aside>
 				</div>
 				<div class="col-span-3">
-					
+					<article v-for="(shop,index) in shops" class="border border-solid border-blue-300 mb-4 p-2">
+						<div class="grid grid-cols-4 gap-4">
+							<div class="col-span-1">
+								<div class="cover" :style="{'--img':`url(${shop.coverImageId})`}"></div>
+							</div>
+							<div class="col-span-3"></div>
+						</div>
+
+						{{shop}}
+					</article>
 				</div>
 			</div>
 		</section>
-
 		{{api}}
+		<div class="bg-gray-700 text-white p-10">
+			{{shop}}
+		</div>
 	</div>
 	<script>
 		let app = new Vue({
@@ -105,11 +115,26 @@
 				loading:true,
 				api:null,
 				search:{
-					cat:0,
+					cat:"all",
 					province:"nearby",
 					price:"placeholder",
 					subcat:"all",
+				},
+			},
+			computed:{
+				shops: function(){
+					let merchants = this.api.merchants
+					let shops = {}
+					if (this.search.cat == 'all') {
+						shops = merchants
+					}else{
+
+					}
+					return shops
 				}
+			},
+			watch:{
+
 			}
 		})
 		let static_data = {};
