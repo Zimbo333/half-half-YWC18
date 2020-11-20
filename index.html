@@ -277,6 +277,10 @@
 						this.getShops()
 						this.showItem = 5
 					},
+					'search.subcat': function(){
+						this.getShops()
+						this.showItem = 5
+					},
 				},
 				methods:{
 					viewMore: function (){
@@ -289,6 +293,7 @@
 						let cat =  this.search.cat
 						let price =  this.search.price
 						let province =  this.search.province
+						let subcat =  this.search.subcat
 						if (province == 'nearby') {
 							province = 'all'
 						}
@@ -302,6 +307,9 @@
 								pick = false
 							}
 							if (cat != 'all' && this.api.categories[cat].name != m[i].categoryName) {
+								pick = false
+							}
+							if (subcat != 'all' && subcat != m[i].subcategoryName) {
 								pick = false
 							}
 
@@ -319,7 +327,7 @@
 			{
 				"shopNameTH": "NeWa Cafe",
 				"categoryName": "ร้านอาหารและเครื่องดื่ม",
-				"subcategoryName": "สินค้า และ บริการ เกี่ยวกับการตกแต่งบ้าน",
+				"subcategoryName": "อาหารทั่วไป อาหารตามสั่ง อาหารจานเดียว",
 				"coverImageId": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
 				"facilities": [
 				"ที่จอดรถ"
@@ -328,12 +336,29 @@
 				"isOpen": "Y",
 				"highlightText": "<strong>ร้านทุกอย่าง</strong> โต๊ะ ตู้ เตียง",
 				"recommendedItems": [
-				"แจกัน",
-				"จานชาม",
-				"เก้าอี้สามขา"
+				"ต้มแซบซู่ซ่า",
+				"เล้งแซ่บ"
 				],
 				"addressProvinceName": "กรุงเทพมหานคร",
 				"addressDistrictName": "เขตธนบุรี"
+			},
+			{
+				"shopNameTH": "ก๋วยจั๊บญวน ริมเล",
+				"categoryName": "ร้านอาหารและเครื่องดื่ม",
+				"subcategoryName": "ก๋วยเตี๋ยว ก๋วยจั๊บ",
+				"coverImageId": "https://images.unsplash.com/photo-1590420882553-4f9150b71f92?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8NHx8bm9vZGxlJTIwdmlldG5hbXxlbnwwfHwwfA%3D%3D&auto=format&fit=crop&w=400&q=60",
+				"facilities": [
+				"ที่จอดรถ"
+				],
+				"priceLevel": 1,
+				"isOpen": "Y",
+				"highlightText": "อร่อยกลมกล่อม ต้นตำรับ",
+				"recommendedItems": [
+				"ก๋วยจั๊บญวน",
+				"เฝอเนื้อ"
+				],
+				"addressProvinceName": "กระบี่",
+				"addressDistrictName": "อำเภอคลองท่อม"
 			}
 			]
 			document.addEventListener('DOMContentLoaded', function() {
