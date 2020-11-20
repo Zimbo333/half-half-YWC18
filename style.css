@@ -43,3 +43,20 @@ body{
 .text-ci-green{
 	color: var(--ci-green)
 }
+
+select[data-value="placeholder"]{
+	color: #aaa
+}
+
+#map-icon{
+	position: absolute;
+	left: 12px;
+	top: 12px;
+	display: none;
+}
+div[data-value="nearby"] #map-icon{
+	display: block;
+}
+div[data-value="nearby"] select{
+	padding-left: 16px;
+}
