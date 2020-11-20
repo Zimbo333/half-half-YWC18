@@ -170,162 +170,184 @@
 						<i class="fas fa-chevron-left cursor-pointer w-full" @click="toggle = false"></i>
 					</div>
 					<div class="col-span-10">
-				<h4 class="text-center text-2xl">กรอกผล</h4></div>
+						<h4 class="text-center text-2xl">กรอกผล</h4></div>
+					</div>
 				</div>
-			</div>
-			<aside class="p-4 ">
-				<form>
-					<h3 class="font-black text-lg font-black">ประเภทร้านค้า</h3>
-					<div class="py-4">
-						<div class="py-1">
-							<label class="cursor-pointer">
-								<input type="radio" name="category" value="all" checked v-model="search.cat">
-								<span class="px-2">ทั้งหมด</span>
-							</label>
-						</div>
-						<div v-for="(i,index) in api.categories" :key="index" class="py-1" v-if="api != null">
-							<label class="cursor-pointer">
-								<input type="radio" name="category" :value="index" v-model="search.cat">
-								<span class="px-2">{{i.name}}</span>
-							</label>
-						</div>
-					</div>
-					<div class="">
-						<label class="font-black text-lg mb-2 block">จังหวัด/ใกล้ฉัน</label>
-						<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm relative"  :data-value="search.province">
-							<i class="fas fa-map-marker-alt map-icon" id="map-icon-near"></i>
-							<i class="fas fa-map-marked-alt map-icon" id="map-icon-all"></i>
-							<select name="province" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.province">
-								<option value="nearby">พื้นที่ใกล้ฉัน</option>
-								<option value="all">สถานที่ทั้งหมด</option>
-								<option v-for="(i,index) in api.provinces" :key="index" :value="i">{{i}}</option>
-							</select>
-						</div>
-					</div>
-					<div class="py-5">
-						<label class="font-black text-lg mb-2 block">ราคา</label>
-						<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm ">
-							<select name="priceRange" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.price" :data-value="search.price">
-								<option value="all" selected>กรุณาเลือก</option>
-								<option v-for="(i,index) in api.priceRange" :key="index" :value="index+1">{{i}}</option>
-							</select>
-						</div>
-					</div>
-					<div class="" v-if="search.cat != 'all'">
-						<label class="font-black text-lg mb-2 block py-3">ประเภท{{api.categories[search.cat].name}}</label>
-						<div class="text-sm">
-							<div class="">
+				<aside class="p-4 ">
+					<form>
+						<h3 class="font-black text-lg font-black">ประเภทร้านค้า</h3>
+						<div class="py-4">
+							<div class="py-1">
 								<label class="cursor-pointer">
-									<input type="radio" name="subcategory" value="all" checked v-model="search.subcat" checked>
+									<input type="radio" name="category" value="all" checked v-model="search.cat">
 									<span class="px-2">ทั้งหมด</span>
 								</label>
 							</div>
-							<div v-for="(i,index) in api.categories[search.cat].subcategories" :key="index" class="py-1">
+							<div v-for="(i,index) in api.categories" :key="index" class="py-1" v-if="api != null">
 								<label class="cursor-pointer">
-									<input type="radio" name="subcategory" :value="i" v-model="search.subcat">
-									<span class="px-2">{{i}}</span>
+									<input type="radio" name="category" :value="index" v-model="search.cat">
+									<span class="px-2">{{i.name}}</span>
 								</label>
 							</div>
 						</div>
-					</div>
-				</form>
-			</aside>
+						<div class="">
+							<label class="font-black text-lg mb-2 block">จังหวัด/ใกล้ฉัน</label>
+							<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm relative"  :data-value="search.province">
+								<i class="fas fa-map-marker-alt map-icon" id="map-icon-near"></i>
+								<i class="fas fa-map-marked-alt map-icon" id="map-icon-all"></i>
+								<select name="province" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.province">
+									<option value="nearby">พื้นที่ใกล้ฉัน</option>
+									<option value="all">สถานที่ทั้งหมด</option>
+									<option v-for="(i,index) in api.provinces" :key="index" :value="i">{{i}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="py-5">
+							<label class="font-black text-lg mb-2 block">ราคา</label>
+							<div class="border border-gray-300 border-solid block w-full py-2 px-3 rounded-md shadow-sm ">
+								<select name="priceRange" class="cursor-pointer  block w-full focus:outline-none" required v-model="search.price" :data-value="search.price">
+									<option value="all" selected>กรุณาเลือก</option>
+									<option v-for="(i,index) in api.priceRange" :key="index" :value="index+1">{{i}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="" v-if="search.cat != 'all'">
+							<label class="font-black text-lg mb-2 block py-3">ประเภท{{api.categories[search.cat].name}}</label>
+							<div class="text-sm">
+								<div class="">
+									<label class="cursor-pointer">
+										<input type="radio" name="subcategory" value="all" checked v-model="search.subcat" checked>
+										<span class="px-2">ทั้งหมด</span>
+									</label>
+								</div>
+								<div v-for="(i,index) in api.categories[search.cat].subcategories" :key="index" class="py-1">
+									<label class="cursor-pointer">
+										<input type="radio" name="subcategory" :value="i" v-model="search.subcat">
+										<span class="px-2">{{i}}</span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</form>
+				</aside>
+			</div>
 		</div>
-	</div>
-	<script>
-		let app = new Vue({
-			el:'#app',
-			data:{
-				loading:true,
-				toggle:false,
-				api:{
-					categories:{},
-					provinces:[],
-					priceRange:[],
+		<script>
+			let app = new Vue({
+				el:'#app',
+				data:{
+					loading:true,
+					toggle:false,
+					api:{
+						categories:{},
+						provinces:[],
+						priceRange:[],
+					},
+					search:{
+						cat:"all",
+						province:"nearby",
+						price:"all",
+						subcat:"all",
+					},
+					qprovince:"nearby",
+					shops:[],
+					viewShop:[],
+					showItem:5
 				},
-				search:{
-					cat:"all",
-					province:"nearby",
-					price:"all",
-					subcat:"all",
-				},
-				qprovince:"nearby",
-				shops:[],
-				viewShop:[],
-				showItem:3
-			},
-			computed:{
-				title: function(){
-					let txt = 'ร้านค้า'
-					if (this.search.cat != 'all') {
-						txt = this.api.categories[this.search.cat].name
+				computed:{
+					title: function(){
+						let txt = 'ร้านค้า'
+						if (this.search.cat != 'all') {
+							txt = this.api.categories[this.search.cat].name
+						}
+						return txt
 					}
-					return txt
-				}
-			},
-			watch:{
-				'search.cat': function(){
-					this.search.subcat = 'all'
-					this.getShops()
-					this.showItem = 3
 				},
-				'search.province': function(){
-					this.getShops()
-					this.showItem = 3
+				watch:{
+					'search.cat': function(){
+						this.search.subcat = 'all'
+						this.getShops()
+						this.showItem = 5
+					},
+					'search.province': function(){
+						this.getShops()
+						this.showItem = 5
+					},
+					'search.price': function(){
+						this.getShops()
+						this.showItem = 5
+					},
 				},
-				'search.price': function(){
-					this.getShops()
-					this.showItem = 3
-				},
-			},
-			methods:{
-				viewMore: function (){
-					this.showItem += 3
-					this.viewShop = this.shops.slice(0,this.showItem)
-				},
-				getShops: function(){
-					let m = this.api.merchants
-					let shops = {}
-					let cat =  this.search.cat
-					let price =  this.search.price
-					let province =  this.search.province
-					if (province == 'nearby') {
-						province = 'all'
-					}
-					shops = []
-					for(let i in m){
-						let pick = true
-						if (price != 'all' && price != m[i].priceLevel) {
-							pick = false
+				methods:{
+					viewMore: function (){
+						this.showItem += 5
+						this.viewShop = this.shops.slice(0,this.showItem)
+					},
+					getShops: function(){
+						let m = this.api.merchants
+						let shops = {}
+						let cat =  this.search.cat
+						let price =  this.search.price
+						let province =  this.search.province
+						if (province == 'nearby') {
+							province = 'all'
 						}
-						if (province != 'all' && province != m[i].addressProvinceName) {
-							pick = false
-						}
-						if (cat != 'all' && cat != m[i].categoryName) {
-							pick = false
-						}
+						shops = []
+						for(let i in m){
+							let pick = true
+							if (price != 'all' && price != m[i].priceLevel) {
+								pick = false
+							}
+							if (province != 'all' && province != m[i].addressProvinceName) {
+								pick = false
+							}
+							if (cat != 'all' && this.api.categories[cat].name != m[i].categoryName) {
+								pick = false
+							}
 
-						if (pick) {
-							shops.push(m[i])
+							if (pick) {
+								shops.push(m[i])
+							}
 						}
+						this.shops = shops
+						this.viewShop = shops.slice(0,this.showItem)
 					}
-					this.shops = shops
-					this.viewShop = shops.slice(0,this.showItem)
 				}
-			}
-		})
-		let static_data = {};
-		document.addEventListener('DOMContentLoaded', function() {
-			fetch('https://panjs.com/ywc18.json')
-			.then(response => response.json())
-			.then(json => {
-				app.loading = false
-				app.api = json
-				static_data = json
-				console.log(app.api)
-				app.getShops()
 			})
-		}, false);
-	</script>
-</body>
-</html>
+			let static_data = {};
+			let moreMerchan = [
+			{
+				"shopNameTH": "NeWa Cafe",
+				"categoryName": "ร้านอาหารและเครื่องดื่ม",
+				"subcategoryName": "สินค้า และ บริการ เกี่ยวกับการตกแต่งบ้าน",
+				"coverImageId": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
+				"facilities": [
+				"ที่จอดรถ"
+				],
+				"priceLevel": 1,
+				"isOpen": "Y",
+				"highlightText": "<strong>ร้านทุกอย่าง</strong> โต๊ะ ตู้ เตียง",
+				"recommendedItems": [
+				"แจกัน",
+				"จานชาม",
+				"เก้าอี้สามขา"
+				],
+				"addressProvinceName": "กรุงเทพมหานคร",
+				"addressDistrictName": "เขตธนบุรี"
+			}
+			]
+			document.addEventListener('DOMContentLoaded', function() {
+				fetch('https://panjs.com/ywc18.json')
+				.then(response => response.json())
+				.then(json => {
+					app.loading = false
+					app.api = json
+					static_data = json
+					console.log(app.api)
+					app.api.merchants = app.api.merchants.concat(moreMerchan)
+					app.getShops()
+				})
+			}, false);
+		</script>
+	</body>
+	</html>
