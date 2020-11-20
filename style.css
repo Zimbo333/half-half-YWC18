@@ -2,6 +2,35 @@
 	--ci-blue:#283a7c;
 	--ci-green:#5fc50d;
 }
+@font-face {
+	font-family: "IBM";
+	src: url('fonts/IBMPlexSansThai-Light.woff2') format('woff2');
+	font-weight: 300;
+}
+@font-face {
+	font-family: "IBM";
+	src: url('fonts/IBMPlexSansThai-Text.woff2') format('woff2');
+	font-weight: 500;
+}
+@font-face {
+	font-family: "IBM";
+	src: url('fonts/IBMPlexSansThai-SemiBold.woff2') format('woff2');
+	font-weight: 700;
+}
+@font-face {
+	font-family: "IBM";
+	src: url('fonts/IBMPlexSansThai-Bold.woff2') format('woff2');
+	font-weight: 900;
+}
+
+
+/*===========
+Document Style
+===========*/
+
+body{
+	font-family: 'IBM',-apple-system, BlinkMacSystemFont, sans-serif !important;
+}
 .bg-ci-blue{
 	background-color: var(--ci-blue)
 }
