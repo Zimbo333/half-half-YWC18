@@ -149,3 +149,12 @@ div[data-value="all"] select{
 #filterMobile[data-toggle="true"]{
 	right: 0%;
 }
+#main{
+	min-height: calc(100vh - 48px - 73px);
+}
+/*-- Mobile Version --*/
+@media (max-width: 768px) {
+	#main{
+		min-height: calc(100vh - 48px - 61px);
+	}
+}
