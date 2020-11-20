@@ -158,3 +158,16 @@ div[data-value="all"] select{
 		min-height: calc(100vh - 48px - 61px);
 	}
 }
+
+#loading{
+	display: flex;
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #fff
+}
+#loading img{
+	margin: auto;
+}
